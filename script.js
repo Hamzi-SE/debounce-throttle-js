@@ -52,3 +52,26 @@ function throttle(cb, delay = 1000) {
 		setTimeout(timeoutFunc, delay)
 	}
 }
+
+// Mouse move example
+
+const defaultMouse = document.getElementById('defaultMouse')
+const debouncedMouse = document.getElementById('debouncedMouse')
+const throttledMouse = document.getElementById('throttledMouse')
+
+function incrementCount(element) {
+	element.textContent = (parseInt(element.innerText) || 0) + 1
+}
+
+const updateDebouncedMouse = debounce(() => {
+	incrementCount(debouncedMouse)
+})
+const updateThrottledMouse = throttle(() => {
+	incrementCount(throttledMouse)
+}, 100)
+
+document.addEventListener('mousemove', e => {
+	incrementCount(defaultMouse)
+	updateDebouncedMouse()
+	updateThrottledMouse()
+})
